@@ -1,0 +1,6 @@
+{
+  "summary":  "Kế hoạch kiểm toán phản biện toàn diện 5 cụm tính năng của Tiny Gladiators: đối chiếu mã nguồn thực tế, phân biệt 3 trạng thái kiểm chứng (Đã viết, Chạy đúng, Đã kiểm thử), phân loại danh sách lỗi theo 4 cấp độ nghiêm trọng, và chốt thứ tự ưu tiên sửa lỗi trước khi phát triển nội dung mới.",
+  "updatedAt":  "2026-10-10T04:55:23.448183113Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Tiny Gladiators",
+  "description": "1v1 Gladiator arena combat game with progression, gear, and chest economy.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
