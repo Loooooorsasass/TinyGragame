@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Tiny Gladiators</title>
+  <meta name="description" content="1v1 Gladiator arena combat game with progression, gear, and chest economy." />
+  <meta property="og:title" content="Tiny Gladiators" />
+  <meta property="og:description" content="1v1 Gladiator arena combat game with progression, gear, and chest economy." />
+  <meta name="theme-color" content="#090f1c" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #090f1c;
+      color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #game-container {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #090f1c;
+    }
+
+    #game-container canvas {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    /* Minimal Modals for Wave / Stage Victory / Defeat flow */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(4, 7, 15, 0.85);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-dialog {
+      background: #111827;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+      width: 100%;
+      max-width: 440px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .modal-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f59e0b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    #system-modal-copy {
+      font-family: inherit;
+      white-space: pre-wrap;
+      font-size: 12px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .btn {
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background 0.15s;
+    }
+    .btn-primary {
+      background: #d97706;
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: #b45309;
+    }
+    .btn-secondary {
+      background: #1f2937;
+      border-color: #374151;
+      color: #94a3b8;
+    }
+    .btn-secondary:hover {
+      background: #374151;
+      color: #ffffff;
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(17, 24, 39, 0.95);
+      border: 1px solid #f59e0b;
+      color: #ffffff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      z-index: 1100;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Phaser Game Canvas Viewport -->
+  <div id="game-container"></div>
+
+  <!-- Minimal System Dialog for Stage/Wave Results & Notifications -->
+  <div id="system-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <h2 id="system-modal-title" class="modal-title">Notice</h2>
+      <pre id="system-modal-copy"></pre>
+      <div class="modal-footer">
+        <button id="system-modal-secondary" class="btn btn-secondary">Close</button>
+        <button id="system-modal-primary" class="btn btn-primary">Action</button>
+      </div>
+      <button id="system-modal-close" style="display:none"></button>
+    </div>
+  </div>
+
+  <!-- Minimal Container for Panel Modals if invoked -->
+  <div id="panel-modal" class="modal-overlay" role="dialog" aria-modal="true" style="display:none">
+    <div class="modal-dialog">
+      <h2 id="panel-modal-title" class="modal-title"></h2>
+      <button id="panel-modal-close" style="display:none"></button>
+      <div id="panel-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Game Bootstrap -->
+  <script type="module" src="/src/game/game.js"></script>
+</body>
+</html>
